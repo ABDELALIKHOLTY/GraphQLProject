@@ -1,86 +1,47 @@
 # KH-ABDEV: Plateforme de Gestion GraphQL
 
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-green) ![GraphQL](https://img.shields.io/badge/GraphQL-Latest-purple) ![Java](https://img.shields.io/badge/Java-17+-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.4-green) ![GraphQL](https://img.shields.io/badge/GraphQL-Latest-purple) ![Java](https://img.shields.io/badge/Java-21-orange) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue)
 
 ## 📋 Table des Matières
 
 - [Objectif](#objectif)
-- [Configuration](#configuration)
+- [Stack Technologique](#stack-technologique)
 - [Architecture](#architecture)
-- [Schema GraphQL](#schema-graphql)
-- [Accès aux Données](#accès-aux-données)
-- [Résolveurs GraphQL](#résolveurs-graphql)
-- [Tests](#tests)
-- [Installation et Utilisation](#installation-et-utilisation)
+- [Entités](#entités)
+- [API GraphQL](#api-graphql)
+- [Configuration](#configuration)
+- [Lancer l'Application](#lancer-lapplication)
 
 ---
 
 ## 🎯 Objectif
 
-Développer une **API GraphQL** complète permettant de gérer des **utilisateurs** et des **posts**. Cette plateforme offre une interface moderne pour créer, lire, mettre à jour et supprimer des ressources avec des relations bidirectionnelles entre utilisateurs et posts.
+**KH-ABDEV** est une **API GraphQL** permettant de gérer des **utilisateurs** et des **posts**. Elle offre une interface moderne complète (CRUD) avec relations bidirectionnelles.
 
 **Fonctionnalités principales:**
-- Gestion complète des utilisateurs (CRUD)
-- Gestion des posts avec relation à l'utilisateur
-- Requêtes et mutations GraphQL optimisées
-- Gestion d'exceptions personnalisée
+- ✅ Gestion complète des utilisateurs (créer, lire, mettre à jour, supprimer)
+- ✅ Gestion des posts avec relation à l'auteur (utilisateur)
+- ✅ Requêtes et mutations GraphQL
+- ✅ Gestion d'exceptions personnalisées
+- ✅ Validation des données
+- ✅ Support PostgreSQL avec Hibernate
+- ✅ Interface GraphiQL sur `/graphiql`
 
 ---
 
-## ⚙️ Configuration
+## 🛠️ Stack Technologique
 
-### Stack Technologique
-
-```
-Spring Boot 3.x       → Framework principal
-GraphQL               → API query language
-Spring Data JPA       → Accès aux données
-Base de Données       → Support MySQL/PostgreSQL
-Docker Compose        → Orchestration des services
-Maven                 → Gestion des dépendances
-```
-
-### Dépendances Principales
-
-```xml
-<!-- Spring Boot Starters -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-web</artifactId>
-</dependency>
-
-<!-- GraphQL -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-graphql</artifactId>
-</dependency>
-
-<!-- JPA & Hibernate -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-
-<!-- Database Driver -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-</dependency>
-```
-
-### Configuration Application (application.properties)
-
-```properties
-spring.application.name=KH-ABDEV
-spring.datasource.url=jdbc:mysql://localhost:3306/kh_abdev
-spring.datasource.username=root
-spring.datasource.password=password
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-
-# GraphQL Configuration
-graphql.servlet.enabled=true
-```
+| Composant | Version | Rôle |
+|-----------|---------|------|
+| **Java** | 21 | Langage de programmation |
+| **Spring Boot** | 4.0.4 | Framework principal |
+| **Spring GraphQL** | Latest | API query language |
+| **Spring Data JPA** | Latest | Accès et persistence des données |
+| **PostgreSQL** | Latest | Base de données relationnelle |
+| **Lombok** | Latest | Réduction du boilerplate |
+| **Hibernate** | Latest | ORM (Object-Relational Mapping) |
+| **Maven** | Latest | Gestion des dépendances |
+| **Docker Compose** | Latest | Orchestration des services |
 
 ---
 
@@ -89,383 +50,123 @@ graphql.servlet.enabled=true
 ```
 KH-ABDEV/
 ├── src/main/java/com/kholty/KH_ABDEV/
-│   ├── Application.java                 # Point d'entrée
-│   ├── config/                          # Configurations
+│   ├── Application.java                 # Point d'entrée Spring Boot
 │   ├── controller/
-│   │   ├── UserController.java
-│   │   └── PostController.java
+│   │   ├── UserController.java          # Mutations & Queries pour Users
+│   │   └── PostController.java          # Mutations & Queries pour Posts
 │   ├── entity/
 │   │   ├── user/
-│   │   │   └── User.java               # Entité JPA User
+│   │   │   └── User.java                # Entité JPA - Utilisateur
 │   │   └── post/
-│   │       └── Post.java               # Entité JPA Post
+│   │       └── Post.java                # Entité JPA - Post
 │   ├── repository/
-│   │   ├── UserRepository.java         # Repository User
-│   │   └── PostRepository.java         # Repository Post
-│   └── exception/
-│       ├── UserException.java
-│       └── PostException.java
+│   │   ├── UserRepository.java          # Requêtes custom pour User
+│   │   └── PostRepository.java          # Requêtes custom pour Post
+│   ├── exception/
+│   │   ├── UserException.java           # Exception personnalisée User
+│   │   └── PostException.java           # Exception personnalisée Post
+│   └── config/                          # Configurations Spring
+│
 ├── src/main/resources/
-│   ├── application.properties
-│   ├── graphql/
-│   │   └── schema.graphqls            # Définition du schéma GraphQL
-│   └── static/
-├── compose.yaml                         # Configuration Docker Compose
-└── pom.xml                              # Configuration Maven
+│   ├── application.properties            # Configuration app
+│   └── graphql/
+│       └── schema.graphqls               # Schéma GraphQL
+│
+├── compose.yaml                          # Configuration Docker Compose
+├── pom.xml                               # Dépendances Maven
+└── README.md                             # Ce fichier
 ```
 
 ---
 
-## 📡 Schema GraphQL
-
-Le schéma GraphQL définit tous les types, requêtes et mutations de l'API.
-
-### Fichier: `schema.graphqls`
-
-```graphql
-# Types
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    posts: [Post!]!
-}
-
-type Post {
-    id: ID!
-    title: String!
-    content: String!
-    author: User!
-}
-
-# Requêtes (Lectures)
-type Query {
-    # Récupérer tous les utilisateurs
-    getAllUsers: [User!]!
-    
-    # Récupérer un utilisateur par ID
-    getUser(id: ID!): User
-    
-    # Récupérer tous les posts
-    getAllPosts: [Post!]!
-    
-    # Récupérer un post par ID
-    getPost(id: ID!): Post
-}
-
-# Mutations (Écritures)
-type Mutation {
-    # Créer un nouvel utilisateur
-    createUser(name: String!, email: String!): User!
-    
-    # Créer un nouveau post
-    createPost(title: String!, content: String!, authorId: ID!): Post!
-    
-    # Mettre à jour un utilisateur
-    updateUser(id: ID!, name: String, email: String): User
-    
-    # Supprimer un utilisateur
-    deleteUser(id: ID!): Boolean!
-    
-    # Supprimer un post
-    deletePost(id: ID!): Boolean!
-}
-```
-
----
-
-## 💾 Accès aux Données
-
+## 📊 Entités
 ### Entité User
-
-```java
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false)
-    private String name;
-    
-    @Column(unique = true, nullable = false)
-    private String email;
-    
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Post> posts = new ArrayList<>();
-    
-    // Getters et Setters
-}
-```
+- **id**: Long (Auto-généré)
+- **name**: String (Obligatoire, unique)
+- **email**: String (Obligatoire, unique)
+- **posts**: List<Post> (Relation One-to-Many)
 
 ### Entité Post
+- **id**: Long (Auto-généré)
+- **title**: String (Obligatoire)
+- **content**: String (Obligatoire)
+- **author**: User (Relation Many-to-One)
 
-```java
-@Entity
-@Table(name = "posts")
-public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(nullable = false)
-    private String title;
-    
-    @Column(columnDefinition = "TEXT")
-    private String content;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
-    private User author;
-    
-    // Getters et Setters
-}
-```
-
-### Repositories JPA
-
-#### UserRepository
-
-```java
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
-    List<User> findAll();
-}
-```
-
-#### PostRepository
-
-```java
-@Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByAuthorId(Long authorId);
-    List<Post> findAll();
-}
-```
+### Relation
+Un **User** peut avoir plusieurs **Posts**.
+Un **Post** appartient à exactement un **User** (auteur).
 
 ---
 
-## 🔍 Résolveurs GraphQL
+## 🔌 API GraphQL
 
-### User Query Resolver
+### URL d'accès
+- **Endpoint GraphQL**: `http://localhost:8080/graphql`
+- **Interface GraphiQL**: `http://localhost:8080/graphiql`
 
-```java
-@Component
-public class UserQueryResolver implements GraphQLQueryResolver {
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-    
-    public User getUser(Long id) {
-        return userRepository.findById(id).orElse(null);
-    }
-}
-```
+### Requêtes (Queries)
 
-### Post Query Resolver
-
-```java
-@Component
-public class PostQueryResolver implements GraphQLQueryResolver {
-    
-    @Autowired
-    private PostRepository postRepository;
-    
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
-    }
-    
-    public Post getPost(Long id) {
-        return postRepository.findById(id).orElse(null);
+#### Récupérer tous les utilisateurs
+```graphql
+query {
+    users {
+        id
+        name
+        email
+        posts { id title }
     }
 }
 ```
 
-### Mutation Resolvers
-
-```java
-@Component
-public class MutationResolver implements GraphQLMutationResolver {
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PostRepository postRepository;
-    
-    // Mutations pour User
-    public User createUser(String name, String email) {
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        return userRepository.save(user);
-    }
-    
-    public User updateUser(Long id, String name, String email) {
-        return userRepository.findById(id)
-            .map(user -> {
-                if (name != null) user.setName(name);
-                if (email != null) user.setEmail(email);
-                return userRepository.save(user);
-            })
-            .orElseThrow(() -> new UserException("User not found"));
-    }
-    
-    public boolean deleteUser(Long id) {
-        userRepository.deleteById(id);
-        return true;
-    }
-    
-    // Mutations pour Post
-    public Post createPost(String title, String content, Long authorId) {
-        User author = userRepository.findById(authorId)
-            .orElseThrow(() -> new UserException("Author not found"));
-        
-        Post post = new Post();
-        post.setTitle(title);
-        post.setContent(content);
-        post.setAuthor(author);
-        return postRepository.save(post);
-    }
-    
-    public boolean deletePost(Long id) {
-        postRepository.deleteById(id);
-        return true;
+#### Récupérer un utilisateur par ID
+```graphql
+query {
+    user(id: "1") {
+        id
+        name
+        email
     }
 }
 ```
 
----
-
-## 🧪 Tests
-
-### Tests GraphQL
-
-Tests des mutations et requêtes principales:
-
-```java
-@SpringBootTest
-@AutoConfigureWebTestClient
-public class GraphQLIntegrationTest {
-    
-    @Autowired
-    private WebTestClient webTestClient;
-    
-    @Test
-    public void testCreateUser() {
-        String query = """
-            mutation {
-                createUser(name: "John Doe", email: "john@example.com") {
-                    id
-                    name
-                    email
-                }
-            }
-        """;
-        
-        webTestClient.post()
-            .uri("/graphql")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue("{\"query\": \"" + query + "\"}")
-            .exchange()
-            .expectStatus().isOk();
-    }
-    
-    @Test
-    public void testGetAllUsers() {
-        String query = """
-            query {
-                getAllUsers {
-                    id
-                    name
-                    email
-                }
-            }
-        """;
-        
-        webTestClient.post()
-            .uri("/graphql")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue("{\"query\": \"" + query + "\"}")
-            .exchange()
-            .expectStatus().isOk();
-    }
-    
-    @Test
-    public void testCreatePost() {
-        String mutation = """
-            mutation {
-                createPost(title: "Mon Post", content: "Contenu...", authorId: 1) {
-                    id
-                    title
-                    content
-                    author {
-                        name
-                    }
-                }
-            }
-        """;
-        
-        webTestClient.post()
-            .uri("/graphql")
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue("{\"query\": \"" + mutation + "\"}")
-            .exchange()
-            .expectStatus().isOk();
+#### Récupérer tous les posts
+```graphql
+query {
+    posts {
+        id
+        title
+        content
+        author { name email }
     }
 }
 ```
 
----
-
-## 🚀 Installation et Utilisation
-
-### Prérequis
-
-- Java 17+
-- Maven 3.8+
-- MySQL/PostgreSQL
-- Docker & Docker Compose (optionnel)
-
-### Installation Locale
-
-```bash
-# 1. Cloner le projet
-git clone <repository-url>
-cd KH-ABDEV
-
-# 2. Configurer la base de données dans application.properties
-# Modifier les paramètres de connexion DB
-
-# 3. Construire le projet
-mvn clean install
-
-# 4. Démarrer l'application
-mvn spring-boot:run
+#### Récupérer un post par ID
+```graphql
+query {
+    post(id: "1") {
+        id
+        title
+        content
+        author { name }
+    }
+}
 ```
 
-### Utilisation avec Docker Compose
-
-```bash
-# Démarrer les services
-docker-compose up -d
-
-# Arrêter les services
-docker-compose down
+#### Récupérer les posts d'un utilisateur
+```graphql
+query {
+    postByUser(userId: "1") {
+        id
+        title
+        content
+    }
+}
 ```
 
-### Tester l'API GraphQL
+### Mutations (Modifications)
 
-**URL:** `http://localhost:8080/graphql`
-
-#### Exemple 1: Créer un utilisateur
-
+#### Créer un utilisateur
 ```graphql
 mutation {
     createUser(name: "Alice Martin", email: "alice@example.com") {
@@ -476,35 +177,158 @@ mutation {
 }
 ```
 
-#### Exemple 2: Récupérer tous les utilisateurs
-
+#### Mettre à jour un utilisateur
 ```graphql
-query {
-    getAllUsers {
+mutation {
+    updateUser(id: "1", name: "Bob Smith", email: "bob@example.com") {
         id
         name
         email
-        posts {
-            title
-        }
     }
 }
 ```
 
-#### Exemple 3: Créer un post
-
+#### Supprimer un utilisateur
 ```graphql
 mutation {
-    createPost(title: "Mon Premier Post", content: "Contenu intéressant", authorId: 1) {
+    deleteUser(id: "1")
+}
+```
+
+#### Créer un post
+```graphql
+mutation {
+    createPost(title: "Mon Post", content: "Contenu...", authorId: "1") {
         id
         title
         content
-        author {
-            id
-            name
-        }
+        author { name }
     }
 }
+```
+
+#### Mettre à jour un post
+```graphql
+mutation {
+    updatePost(id: "1", title: "Nouveau titre", content: "Nouveau contenu") {
+        id
+        title
+        content
+    }
+}
+```
+
+#### Supprimer un post
+```graphql
+mutation {
+    deletePost(id: "1")
+}
+```
+
+---
+
+## ⚙️ Configuration
+
+### Fichier: `application.properties`
+
+```properties
+spring.application.name=KH-ABDEV
+server.port=8080
+
+# GraphQL Configuration
+spring.graphql.graphiql.enabled=true
+spring.graphql.graphiql.path=/graphiql
+
+# PostgreSQL Datasource
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
+spring.datasource.username=myuser
+spring.datasource.password=secret
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+
+# JPA / Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=true
+
+# Logging
+logging.level.root=INFO
+logging.level.org.springframework.web=DEBUG
+logging.level.org.hibernate.SQL=DEBUG
+```
+
+---
+
+## 🚀 Lancer l'Application
+
+### Prérequis
+- **Java 21** (ou version supérieure)
+- **Maven 3.8+**
+- **PostgreSQL 12+** (ou utiliser Docker Compose)
+
+### Étape 1: Configurer la base de données
+
+#### Option A - Utiliser Docker Compose
+```bash
+docker-compose up -d
+```
+
+#### Option B - PostgreSQL local
+```bash
+# Créer la base de données
+createdb mydatabase
+
+# Configurer application.properties avec vos identifiants
+```
+
+### Étape 2: Construire et démarrer
+
+```bash
+# Compiler le projet
+mvn clean install
+
+# Démarrer l'application
+mvn spring-boot:run
+
+# L'application démarre sur http://localhost:8080
+```
+
+---
+
+## 🛠️ Dépendances Principales
+
+```xml
+<!-- Spring Boot Starters -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-graphql</artifactId>
+</dependency>
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-webmvc</artifactId>
+</dependency>
+
+<!-- Database Driver -->
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <scope>runtime</scope>
+</dependency>
+
+<!-- Lombok (réduction du boilerplate) -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <optional>true</optional>
+</dependency>
 ```
 
 ---
@@ -513,63 +337,37 @@ mutation {
 
 ### UserException
 
-```java
-public class UserException extends RuntimeException {
-    public UserException(String message) {
-        super(message);
-    }
-}
-```
+Levée lorsqu'une opération User échoue:
+- Email déjà existant lors de la création
+- Utilisateur non trouvé lors de la mise à jour
 
 ### PostException
 
-```java
-public class PostException extends RuntimeException {
-    public PostException(String message) {
-        super(message);
-    }
-}
-```
+Levée lorsqu'une opération Post échoue:
+- Auteur (User) non trouvé lors de la création
+- Post non trouvé lors de la mise à jour
 
 ---
 
-## 📝 Notes de Développement
+## 📝 Brève Description du Code
 
-- Les IDs sont auto-générés par la base de données (IDENTITY)
-- Les relations User ↔ Post sont bidirectionnelles
-- La gestion des exceptions est centralisée
-- Les mutations modifient l'état de la base de données
-- Les requêtes sont en lecture seule
+### Controllers
+- **UserController**: Gère les Queries et Mutations pour les utilisateurs
+- **PostController**: Gère les Queries et Mutations pour les posts
 
----
+Tous deux utilisent les annotations GraphQL:
+- `@QueryMapping`: pour les requêtes de lecture
+- `@MutationMapping`: pour les opérations d'écriture
 
-## 📦 Structure des Dépôts
+### Repositories
+- **UserRepository**: Méthodes personnalisées `existsByEmail()`, `findByEmail()`
+- **PostRepository**: Méthode personnalisée `findByAuthorId()`
 
-| Repository | Responsabilité |
-|-----------|-----------------|
-| `UserRepository` | Opérations CRUD sur les utilisateurs |
-| `PostRepository` | Opérations CRUD sur les posts |
-
----
-
-## 🤝 Contribution
-
-Pour contribuer au projet, veuillez:
-1. Créer une branche pour votre feature
-2. Effectuer vos modifications
-3. Ajouter des tests
-4. Soumettre une pull request
+### Entités JPA
+- Utilisation de Lombok pour réduire le boilerplate
+- Relations correctement configurées avec `@OneToMany` et `@ManyToOne`
+- Lazy loading pour optimiser les requêtes
 
 ---
-
-## 📄 Licence
-
-Ce projet est fourni à des fins éducatives.
-
----
-
-## 📞 Support
-
-Pour toute question ou problème, veuillez contacter l'équipe de développement.
 
 **Dernière mise à jour:** Mars 2026
