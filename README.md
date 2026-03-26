@@ -7,7 +7,7 @@
 
 ## 🎯 Objectif
 
-**KH-ABDEV** est une **API GraphQL** permettant de gérer des **utilisateurs** et des **posts**. Elle offre une interface moderne complète (CRUD) avec relations bidirectionnelles.
+**API GraphQL** permettant de gérer des **utilisateurs** et des **posts**. Elle offre une interface moderne complète (CRUD) avec relations bidirectionnelles.
 
 **Fonctionnalités principales:**
 - ✅ Gestion complète des utilisateurs (créer, lire, mettre à jour, supprimer)
