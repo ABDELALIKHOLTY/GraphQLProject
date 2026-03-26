@@ -1,0 +1,60 @@
+type User{
+    id :ID!
+    name:String!
+    email:String!
+    posts:[Post]!
+
+
+}
+
+type Post{
+    id:ID!
+    title:String!
+    content:String!
+    author:User!
+}
+
+# Requêtes (pour lire les données)
+type Query{
+    # Récupérer tous les utilisateurs
+    users:[User!]!
+    # Récupérer un utilisateur par son ID
+    user(id:ID!):User
+    # Récupérer tous les posts
+    posts:[Post!]!
+    # Récupérer un post par son ID
+    post(id:ID!):Post!
+    # Récupérer les posts d'un utilisateur
+    postByUser(userId:ID!):[Post!]!
+
+}
+
+# Mutations (pour modifier les données)
+type Mutation{
+    # Créer un utilisateur
+    createUser(name:String!,email:String!):User!
+    # Créer un post
+    createPost(title:String!,content:String!,authorId:ID!):Post!
+    # Mettre à jour un post
+    updatePost(id:ID!,title:String,content:String):Post
+    # Supprimer un post
+    deletePost(id:ID!):Boolean!
+    # Mettre à jour un utilisateur
+    updateUser(id:ID!,name:String,email:String):User
+    # Mettre à jour un utilisateur
+    deleteUser(id:ID!):Boolean!
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
