@@ -1,16 +1,7 @@
-# KH-ABDEV: Plateforme de Gestion GraphQL
+# Plateforme de Gestion GraphQL
 
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.4-green) ![GraphQL](https://img.shields.io/badge/GraphQL-Latest-purple) ![Java](https://img.shields.io/badge/Java-21-orange) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Latest-blue)
 
-## 📋 Table des Matières
-
-- [Objectif](#objectif)
-- [Stack Technologique](#stack-technologique)
-- [Architecture](#architecture)
-- [Entités](#entités)
-- [API GraphQL](#api-graphql)
-- [Configuration](#configuration)
-- [Lancer l'Application](#lancer-lapplication)
 
 ---
 
@@ -62,10 +53,10 @@ KH-ABDEV/
 │   ├── repository/
 │   │   ├── UserRepository.java          # Requêtes custom pour User
 │   │   └── PostRepository.java          # Requêtes custom pour Post
-│   ├── exception/
-│   │   ├── UserException.java           # Exception personnalisée User
-│   │   └── PostException.java           # Exception personnalisée Post
-│   └── config/                          # Configurations Spring
+│   └── exception/
+│       ├── UserException.java           # Exception personnalisée User
+│       └── PostException.java           # Exception personnalisée Post
+│                          
 │
 ├── src/main/resources/
 │   ├── application.properties            # Configuration app
